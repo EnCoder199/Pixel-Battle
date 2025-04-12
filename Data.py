@@ -7,6 +7,34 @@ entities = []
 ENTITY_WIDTH = 64
 ENTITY_HEIGHT = 64
 
+class Player:
+    def __init__(self, pos: tuple | pygame.Vector2, health: int, speed: float, ammo: int, skin: pygame.Surface, reload_time: int = 5000):
+        self.x = pos[0]
+        self.y = pos[1]
+        self.pos = pos
+        self.skin = skin
+        self.speed = speed
+        self.health = health
+        self.ammo = ammo
+        self.last_reload = 0
+        self.reload_time = reload_time
+
+    def move(self, x: float = 0, y: float = 0):
+        self.x += x
+        self.y += y
+
+    def set_skin(self, skin):
+        self.skin = skin
+
+    def set_pos(self, x: float = 0, y: float = 0):
+        self.x = x
+        self.y = y
+
+    def draw(self):
+        pos = pygame.Vector2(self.x, self.y)
+        skin = self.skin
+        screen.blit(skin, pos)
+
 class Entity:
     x = None
     y = None

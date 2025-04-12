@@ -16,7 +16,7 @@ bullet = pygame.transform.scale(bullet, (bullet.get_width() + 5, bullet.get_heig
 
 # Player
 player = pygame.image.load(os.path.join("Graphics", "player.png"))
-#player = pygame.transform.scale(player, (player.get_width(), player.get_height()))
+player = pygame.transform.scale(player, (player.get_width() + 35, player.get_height() + 35))
 
 class HUD:
     # Bullet
