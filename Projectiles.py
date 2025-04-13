@@ -4,12 +4,13 @@ from Data import Bullet
 from Data import bullets
 from Graphics import screen
 
-def create(pos: tuple | pygame.Vector2, aim: pygame.Vector2, skin: pygame.Surface):
+def create(pos: tuple | pygame.Vector2, aim: pygame.Vector2, skin: pygame.Surface, damage: int = 2):
     self = Bullet()
     self.x = pos[0]
     self.y = pos[1]
     self.skin = skin
     self.aim = aim
+    self.damage = damage
 
     # Calculate direction vector from bullet to mouse
     dx = self.aim.x - self.x

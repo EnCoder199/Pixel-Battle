@@ -1,5 +1,5 @@
 import pygame
-from Data import tiles, bullets, Player
+from Data import tiles, entities, bullets, Player
 from Graphics import screen
 import Graphics
 import Tiles
@@ -7,10 +7,12 @@ import Entities
 import Projectiles
 import Aiming
 import HUD
+import Calculations
 
 # Pygame setup
 pygame.init()
 pygame.display.set_caption("Pixel Battle")
+pygame.display.set_icon(Graphics.player)
 clock = pygame.time.Clock()
 dt = 0
 running = True
@@ -19,8 +21,9 @@ running = True
 debug = False
 
 # Setup
-player = Player((screen.get_width() / 2, screen.get_height() / 2), 200, 5, 50, Graphics.player)
-tiles.append(Tiles.create((10, 10), Graphics.test_surface))
+player = Player((screen.get_width() / 2, screen.get_height() / 2), 200, 300, 50, Graphics.player)
+tiles.append(Tiles.create((10, 10), Graphics.generic_tile))
+entities.append(Entities.create((10, 10), Graphics.test_surface, 20))
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -45,17 +48,33 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        for tile in tiles:
-            tile.move(0, 300 * dt)
+        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities) # Normilising the lists so the function does both even if one list is empty
+        for (tile, entity) in zip(temp_tiles, temp_entities):
+            if tile != None:
+                tile.move(0, player.speed * dt)
+            if entity != None:
+                entity.move(0, player.speed * dt)
     if keys[pygame.K_a]:
-        for tile in tiles:
-            tile.move(300 * dt)
+        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        for (tile, entity) in zip(temp_tiles, temp_entities):
+            if tile != None:
+                tile.move(player.speed * dt)
+            if entity != None:
+                entity.move(player.speed * dt)
     if keys[pygame.K_s]:
-        for tile in tiles:
-            tile.move(0, -300 * dt)
+        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        for (tile, entity) in zip(temp_tiles, temp_entities):
+            if tile != None:
+                tile.move(0, -player.speed * dt)
+            if entity != None:
+                entity.move(0, -player.speed * dt)
     if keys[pygame.K_d]:
-        for tile in tiles:
-            tile.move(-300 * dt)
+        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        for (tile, entity) in zip(temp_tiles, temp_entities):
+            if tile != None:
+                tile.move(-player.speed * dt)
+            if entity != None:
+                entity.move(-player.speed * dt)
     if keys[pygame.K_SPACE] and keys[pygame.K_LSHIFT]:
         if player.ammo > 0:
             bullets.append(Projectiles.create(pygame.Vector2(player.x, player.y + 27), pygame.Vector2(pygame.mouse.get_pos()), pygame.transform.rotate(Graphics.bullet, Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos()) + 180)))
@@ -66,6 +85,9 @@ while running:
     view_range_rect = view_range.get_rect(center=player.pos)
     previous_view_angle = Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos())
 
+    for entity in entities:
+        Entities.damage_on_bullet(entity)
+    Entities.check_if_dead()
     screen.blit(view_range, view_range_rect)
     HUD.Health.draw(player.health)
     HUD.Ammo.draw(player.ammo)

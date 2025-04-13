@@ -2,11 +2,6 @@ import pygame
 import math
 from Graphics import *
 
-# Entity
-entities = []
-ENTITY_WIDTH = 64
-ENTITY_HEIGHT = 64
-
 class Player:
     def __init__(self, pos: tuple | pygame.Vector2, health: int, speed: float, ammo: int, skin: pygame.Surface, reload_time: int = 5000):
         self.x = pos[0]
@@ -34,6 +29,11 @@ class Player:
         pos = pygame.Vector2(self.x, self.y)
         skin = self.skin
         screen.blit(skin, pos)
+        
+# Entity
+entities = []
+ENTITY_WIDTH = 64
+ENTITY_HEIGHT = 64
 
 class Entity:
     x = None

@@ -24,7 +24,24 @@ def draw(self: Entity | None = None):
     elif type(self) == Entity:
         self.draw()
 
-def is_shot(self):
-    self_rect = pygame.Rect(self.x - ENTITY_WIDTH / 2, self.y - ENTITY_HEIGHT / 2, ENTITY_WIDTH, ENTITY_HEIGHT)
+def touching_bullet(self: Entity):
+    entity_rect = pygame.Rect(self.x - self.skin.get_width() / 2, self.y - self.skin.get_height() / 2, self.skin.get_width(), self.skin.get_height())
     for bullet in bullets:
-        bullet_rect = pygame.Rect()
+        bullet_rect = pygame.Rect(bullet.x - bullet.skin.get_width() / 2, bullet.y - bullet.skin.get_height() / 2, bullet.skin.get_width(), bullet.skin.get_height())
+        if pygame.Rect.colliderect(entity_rect, bullet_rect):
+            return True
+    return False
+
+def damage_on_bullet(self: Entity):
+    entity_rect = pygame.Rect(self.x - self.skin.get_width() / 2, self.y - self.skin.get_height() / 2, self.skin.get_width(), self.skin.get_height())
+    for bullet in bullets:
+        bullet_rect = pygame.Rect(bullet.x - bullet.skin.get_width() / 2, bullet.y - bullet.skin.get_height() / 2, bullet.skin.get_width(), bullet.skin.get_height())
+        if pygame.Rect.colliderect(entity_rect, bullet_rect):
+            self.health -= bullet.damage
+            del bullets[bullets.index(bullet)]
+            break
+
+def check_if_dead():
+    for entity in entities:
+        if entity.health <= 0:
+            del entities[entities.index(entity)]

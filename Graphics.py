@@ -18,6 +18,9 @@ bullet = pygame.transform.scale(bullet, (bullet.get_width() + 5, bullet.get_heig
 player = pygame.image.load(os.path.join("Graphics", "player.png"))
 player = pygame.transform.scale(player, (player.get_width() + 35, player.get_height() + 35))
 
+# Tile
+generic_tile = pygame.image.load(os.path.join("Graphics", "tile.png")).convert_alpha()
+
 class HUD:
     # Bullet
     bullet_cartridge = pygame.image.load(os.path.join("Graphics", "bullet_cartridge.png")).convert_alpha()
