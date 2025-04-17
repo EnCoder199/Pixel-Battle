@@ -1,5 +1,5 @@
 import pygame
-from Data import tiles, entities, bullets, Player
+from Data import tiles, entities, bullets, TILE_WIDTH, TILE_HEIGHT, Player
 from Graphics import screen
 import Graphics
 import Tiles
@@ -8,6 +8,7 @@ import Projectiles
 import Aiming
 import HUD
 import Calculations
+import Mini_map
 
 # Pygame setup
 pygame.init()
@@ -22,8 +23,11 @@ debug = False
 
 # Setup
 player = Player((screen.get_width() / 2, screen.get_height() / 2), 200, 300, 50, Graphics.player)
-tiles.append(Tiles.create((10, 10), Graphics.generic_tile))
-entities.append(Entities.create((10, 10), Graphics.test_surface, 20))
+Tiles.create((10, 10), Graphics.generic_tile)
+Tiles.create((11, 10), Graphics.generic_tile)
+Entities.create((10, 10), Graphics.test_surface, 20)
+
+# Main loop
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -37,14 +41,9 @@ while running:
                 current_time = pygame.time.get_ticks()
                 if current_time - player.last_reload >= player.reload_time:
                     player.last_reload = current_time
-                    player.ammo = 50
+                    player.ammo = 30
 
     screen.fill("white")
-    Tiles.draw()
-    Entities.draw()
-    player.draw()
-    Projectiles.draw()
-    Projectiles.update()
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
@@ -85,12 +84,18 @@ while running:
     view_range_rect = view_range.get_rect(center=player.pos)
     previous_view_angle = Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos())
 
+    Tiles.draw()
+    Entities.draw()
+    player.draw()
+    Projectiles.draw()
+    Projectiles.update()
     for entity in entities:
         Entities.damage_on_bullet(entity)
     Entities.check_if_dead()
     screen.blit(view_range, view_range_rect)
     HUD.Health.draw(player.health)
     HUD.Ammo.draw(player.ammo)
+    Mini_map.update_and_draw(player)
     Projectiles.delete_on_edge()
     pygame.display.flip()
     dt = clock.tick(60) / 1000

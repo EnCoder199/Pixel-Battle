@@ -1,6 +1,6 @@
 import pygame
 import random
-from Data import *
+from Data import entities, ENTITY_WIDTH, ENTITY_HEIGHT, Entity, bullets
 
 def create(pos: tuple | pygame.Vector2, skin: pygame.Surface, health: int, speed: float = 250, aim_pos: pygame.Vector2 | None = None, resize: bool = True):
     self = Entity()
@@ -15,6 +15,7 @@ def create(pos: tuple | pygame.Vector2, skin: pygame.Surface, health: int, speed
         self.aim_pos = aim_pos
     if resize:
         self.skin = pygame.transform.scale(skin, (ENTITY_WIDTH, ENTITY_HEIGHT))
+    entities.append(self)
     return self
 
 def draw(self: Entity | None = None):
@@ -39,7 +40,6 @@ def damage_on_bullet(self: Entity):
         if pygame.Rect.colliderect(entity_rect, bullet_rect):
             self.health -= bullet.damage
             del bullets[bullets.index(bullet)]
-            break
 
 def check_if_dead():
     for entity in entities:

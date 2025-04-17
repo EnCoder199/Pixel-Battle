@@ -87,6 +87,35 @@ class Tile:
         skin = self.skin
         screen.blit(skin, pos)
 
+# Obstacle
+obstacles = []
+class Obstacle:
+    x = None
+    y = None
+    pos = None
+    skin = None
+    rect = None
+
+    def move(self, x: float = 0, y: float = 0):
+        self.x += x
+        self.y += y
+
+    def set_skin(self, skin):
+        self.skin = skin
+
+    def set_pos(self, x: float = 0, y: float = 0):
+        self.x = x
+        self.y = y
+
+    def change_dimentions(self, x: float = 0, y: float = 0):
+        rect = self.rect
+        self.rect = pygame.Rect((rect + x) - rect.get_width() / 2, (rect + x) - rect.get_height() / 2, rect.get_width(), rect.get_height())
+
+    def draw(self):
+        pos = pygame.Vector2(self.x, self.y)
+        skin = pygame.transform.scale(self.skin, self.rect)
+        screen.blit(skin, self.rect)
+
 # Bullet
 bullets = []
 #BULLET_WIDTH = 
