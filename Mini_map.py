@@ -5,7 +5,7 @@ from Data import tiles, obstacles, entities, Tile, Obstacle, Entity, Player, TIL
 map_area = pygame.Rect(0, screen.get_height() - screen.get_height() // 3, screen.get_width() // 3, screen.get_height() // 3)
 map_surface = pygame.Surface((map_area.width, map_area.height))
 
-def world_to_minimap(x, y, player, map_area):
+def world_to_minimap(x: float, y: float, player: Player, map_area: pygame.Rect):
     # Ratio of minimap size to screen size
     scale_x = map_area.width / screen.get_width()
     scale_y = map_area.height / screen.get_height()
@@ -21,9 +21,9 @@ def world_to_minimap(x, y, player, map_area):
     mini_x = center_x + dx * scale_x
     mini_y = center_y + dy * scale_y
 
-    return mini_x, mini_y # Get the position of the object reletave to the mini ma
+    return mini_x, mini_y # Get the position of the object reletave to the mini map
 
-def blit_obstacles_to_map(objects: list, target_surface, map_area, player):
+def blit_obstacles_to_map(objects: list, target_surface: pygame.Surface, map_area: pygame.Rect, player: Player):
     scale_x = map_area.width / screen.get_width()
     scale_y = map_area.height / screen.get_height()
     for obj in objects:
@@ -60,7 +60,7 @@ def update_and_draw(player):
     )
 
     map_surface = pygame.Surface((map_area.width, map_area.height))
-    map_surface.fill((50, 50, 50))  # Background color for debug
+    map_surface.fill((50, 50, 50))
 
     blit_obstacles_to_map(tiles, map_surface, map_area, player)
     blit_obstacles_to_map(obstacles, map_surface, map_area, player)

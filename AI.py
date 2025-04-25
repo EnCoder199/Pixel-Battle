@@ -1,5 +1,4 @@
 import pygame
-import math
 from Data import *
 
 def check_if_in_range(self: Entity):

@@ -1,4 +1,5 @@
 import pygame
+import math
 
 def round_to_nearest_multiple(number, n):
     return round(number / n) * n
@@ -33,7 +34,7 @@ def project_polygon(points, axis):
 def overlap(min1, max1, min2, max2):
     return max1 >= min2 and max2 >= min1
 
-def polygons_collide(poly1, poly2):
+def polygons_collide(poly1: list, poly2: list):
     for polygon in [poly1, poly2]:
         for i in range(len(polygon)):
             p1 = polygon[i]
@@ -49,9 +50,7 @@ def polygons_collide(poly1, poly2):
 
     return True  # No separating axis found, so collision
 
-# Example usage
-poly1 = [pygame.Vector2(100, 100), pygame.Vector2(150, 100), pygame.Vector2(125, 150)]
-poly2 = [pygame.Vector2(130, 130), pygame.Vector2(180, 130), pygame.Vector2(155, 180)]
-
-if polygons_collide(poly1, poly2):
-    print("Polygons are colliding!")
+def get_angled_pos(pos: tuple, theta: float):
+    new_x = pos[0] * math.cos(theta) - pos[1] * math.sin(theta)
+    new_y = pos[1] * math.cos(theta) + pos[0] * math.sin(theta)
+    return (new_x, new_y)

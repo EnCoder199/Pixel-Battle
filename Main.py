@@ -1,5 +1,5 @@
 import pygame
-from Data import tiles, entities, bullets, TILE_WIDTH, TILE_HEIGHT, Player
+from Data import tiles, entities, Player
 from Graphics import screen
 import Graphics
 import Tiles
@@ -35,7 +35,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if player.ammo > 0:
-                    bullets.append(Projectiles.create(pygame.Vector2(player.x, player.y + 27), pygame.Vector2(pygame.mouse.get_pos()), pygame.transform.rotate(Graphics.bullet, Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos()) + 180)))
+                    Projectiles.create(pygame.Vector2(player.x, player.y + 27), pygame.Vector2(pygame.mouse.get_pos()), pygame.transform.rotate(Graphics.bullet, Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos()) + 180))
                     player.ammo -= 1
             if event.key == pygame.K_r:
                 current_time = pygame.time.get_ticks()
@@ -64,19 +64,19 @@ while running:
         temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
-                tile.move(0, -player.speed * dt)
+                tile.move(0, -(player.speed * dt))
             if entity != None:
-                entity.move(0, -player.speed * dt)
+                entity.move(0, -(player.speed * dt))
     if keys[pygame.K_d]:
         temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
-                tile.move(-player.speed * dt)
+                tile.move(-(player.speed * dt))
             if entity != None:
-                entity.move(-player.speed * dt)
+                entity.move(-(player.speed * dt))
     if keys[pygame.K_SPACE] and keys[pygame.K_LSHIFT]:
         if player.ammo > 0:
-            bullets.append(Projectiles.create(pygame.Vector2(player.x, player.y + 27), pygame.Vector2(pygame.mouse.get_pos()), pygame.transform.rotate(Graphics.bullet, Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos()) + 180)))
+            Projectiles.create(pygame.Vector2(player.x, player.y + 27), pygame.Vector2(pygame.mouse.get_pos()), pygame.transform.rotate(Graphics.bullet, Aiming.get_vision_angle(player.pos, pygame.mouse.get_pos()) + 180))
             player.ammo -= 1
     
     # View range

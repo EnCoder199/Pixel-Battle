@@ -25,6 +25,8 @@ def create(pos: tuple | pygame.Vector2, aim: pygame.Vector2, skin: pygame.Surfac
 
     self.xv = dx * self.speed
     self.yv = dy * self.speed
+    
+    bullets.append(self)
     return self
 
 def draw():
