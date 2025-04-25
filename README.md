@@ -6,4 +6,4 @@ Pixel Battle is a fun game that mixes between CQB (Close Quarters Battle) and ma
 # Controls
 Movement - WASD
 Single Shoot - Space
-Spam Shoot - Shift + Space
+Multi Shoot - Shift + Space
