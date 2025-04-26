@@ -47,7 +47,7 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities) # Normilising the lists so the function does both even if one list is empty
+        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities) # Equalising the lists so the function does both even if one list is empty
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
                 tile.move(0, player.speed * dt)
