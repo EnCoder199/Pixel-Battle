@@ -47,28 +47,28 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities) # Equalising the lists so the function does both even if one list is empty
+        temp_tiles, temp_entities = Calculations.equalize_lists([tiles, entities]) # Equalising the lists so the function does both even if one list is empty
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
                 tile.move(0, player.speed * dt)
             if entity != None:
                 entity.move(0, player.speed * dt)
     if keys[pygame.K_a]:
-        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        temp_tiles, temp_entities = Calculations.equalize_lists([tiles, entities])
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
                 tile.move(player.speed * dt)
             if entity != None:
                 entity.move(player.speed * dt)
     if keys[pygame.K_s]:
-        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        temp_tiles, temp_entities = Calculations.equalize_lists([tiles, entities])
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
                 tile.move(0, -(player.speed * dt))
             if entity != None:
                 entity.move(0, -(player.speed * dt))
     if keys[pygame.K_d]:
-        temp_tiles, temp_entities = Calculations.balance_lists(tiles, entities)
+        temp_tiles, temp_entities = Calculations.equalize_lists([tiles, entities])
         for (tile, entity) in zip(temp_tiles, temp_entities):
             if tile != None:
                 tile.move(-(player.speed * dt))

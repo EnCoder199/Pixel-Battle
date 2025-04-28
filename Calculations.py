@@ -4,24 +4,9 @@ import math
 def round_to_nearest_multiple(number, n):
     return round(number / n) * n
 
-def balance_lists(a: list, b: list):
-    a = a.copy()
-    b = b.copy()
-
-    a_length = len(a)
-    b_length = len(b)
-
-    if a_length > b_length:
-        list_dif = a_length - b_length
-        for _ in range(list_dif):
-            b.append(None)
-
-    elif a_length < b_length:
-        list_dif = b_length - a_length
-        for _ in range(list_dif):
-            a.append(None)
-    
-    return a, b
+def equalize_lists(lists, padding_value=None):
+    max_length = max(len(lst) for lst in lists)
+    return [lst + [padding_value] * (max_length - len(lst)) for lst in lists]
 
 def project_polygon(points, axis):
     min_proj = max_proj = points[0].dot(axis)
